@@ -10,31 +10,30 @@ namespace appUbicua1.ViewModels
 {
     public class MainViewModel
     {
-        #region Attributes
-        private ApiService apiService;
+        #region ViewModels
+        private PagosViewModel Pagos;
         #endregion
-
-        #region Properties
-        public ObservableCollection<Pagos> pagos { get; set; }
-        #endregion
-
+     
         #region Contructor
         public MainViewModel()
         {
-            apiService = new ApiService();
-            pagos = new ObservableCollection<Pagos>();
-            LoadPagos();
+            instance = this;
+            this.Pagos = new PagosViewModel();
         }
         #endregion
 
-        #region Metodos
-        private async void LoadPagos()
+        #region Singleton
+        private static MainViewModel instance;
+
+        public static MainViewModel GetInstance()
         {
-            var rsp = await apiService.Get<Pagos>("https://",
-                                    "api/",
-                                    "Pagos");
-            throw new NotImplementedException();
+            if (instance == null) 
+            {
+                return new MainViewModel();
+            }
+            return instance;
         }
+
         #endregion
     }
 }

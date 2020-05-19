@@ -3,44 +3,94 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             x:Class="appUbicua1.Views.PagosPage">
-  <ListView x:Name="MyListView"
-            ItemsSource="{Binding Items}"
-            ItemTapped="Handle_ItemTapped"
-            CachingStrategy="RecycleElement">
-    <d:ListView.ItemsSource>
-        <x:Array Type="{x:Type x:String}">
-            <x:String>Item 1</x:String>
-            <x:String>Item 2</x:String>
-            <x:String>Item 3</x:String>
-            <x:String>Item 4</x:String>
-            <x:String>Item 5</x:String>
-        </x:Array>
-    </d:ListView.ItemsSource>
-    <!--Built in Cells-->
-    <ListView.ItemTemplate>
-        <DataTemplate>
-            <TextCell Text="{Binding .}" d:Text="{Binding .}" />
-        </DataTemplate>
-    </ListView.ItemTemplate>
-    
-    <!--Custom View Cells-->
-    <!--
-    <ListView.ItemTemplate>
-      <DataTemplate>
-        <ViewCell>
-          <StackLayout>
-            <Label Text="{Binding Text}" 
-                   d:Text="{Binding .}"
-                   Style="{DynamicResource ListItemTextStyle}" />
-            <Label Text="{Binding Detail}" 
-                   d:Text="Detail"
-                   Style="{DynamicResource ListItemDetailTextStyle}"/>
-          </StackLayout>
-        </ViewCell>
-      </DataTemplate>
-    </ListView.ItemTemplate>
-    -->
-  </ListView>
+             x:Class="appUbicua1.Views.PagosPage"
+             Title="PaymentList"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             >
+    <ContentPage.Content>
+        <StackLayout Padding="10,30,10,10" Spacing="10"
+                     BindingContext="{Binding Pagos}">
+            <Label x:Name="titleLabel"
+                   FontSize="30"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+            <StackLayout Orientation="Horizontal">
+                <Button x:Name="newButton"
+                        Text="Nuevo"
+                        BackgroundColor="Navy"
+                        TextColor="White"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center"/>
+                <Button x:Name="findButton"
+                        Text="Buscar"
+                        BackgroundColor="Navy"
+                        TextColor="White"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center"/>
+                <Button x:Name="updateButton"
+                        Text="Actualizar"
+                        BackgroundColor="Navy"
+                        TextColor="White"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center"/>
+                <Button x:Name="deleteButton"
+                        Text="Eliminar"
+                        BackgroundColor="Navy"
+                        TextColor="White"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center"/>
+            </StackLayout>
+            <ListView x:Name="PaymentListView"
+                      BackgroundColor="Silver"
+                      HasUnevenRows="True"
+                      IsPullToRefreshEnabled="True"
+                      IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                      ItemsSource="{Binding Pagos}"
+                      SeparatorVisibility="None"
+                      RefreshCommand="{Binding RefreshCommand}"
+                      HorizontalOptions="FillAndExpand"
+                      VerticalOptions="FillAndExpand">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame
+                                CornerRadius="20"
+                                HasShadow="True"
+                                Margin="5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout
+                                        Grid.Column="1"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontSize="Medium"
+                                            Text="{Binding idCliente}"
+                                            TextColor="Black">
+                                        </Label>
+                                        <Label
+                                            FontSize="Medium"
+                                            Text="{Binding montoTotal}"
+                                            TextColor="Black">
+                                        </Label>
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="Medium"
+                                            Text="{Binding pagado}"
+                                            TextColor="Black">
+                                        </Label>
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

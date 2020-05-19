@@ -11,7 +11,7 @@ namespace appUbicua1
         {
             InitializeComponent();
 
-            MainPage = new PagosPage();
+            MainPage = new NavigationPage(new PagosPage());
         }
 
         protected override void OnStart()
